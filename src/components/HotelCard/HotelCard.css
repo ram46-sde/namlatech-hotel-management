@@ -64,3 +64,52 @@
     height: 220px;
   }
 }
+
+.hotel-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.edit-hotel-button,
+.delete-hotel-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-hotel-button {
+  border: 1px solid #245bc5;
+  color: #245bc5;
+  background: white;
+  text-decoration: none;
+}
+
+.edit-hotel-button:hover {
+  background: #245bc5;
+  color: white;
+}
+
+.delete-hotel-button {
+  border: 1px solid #dc2626;
+  background: white;
+  color: #dc2626;
+}
+
+.delete-hotel-button:hover {
+  background: #dc2626;
+  color: white;
+}
+
+.delete-hotel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

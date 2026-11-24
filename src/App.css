@@ -218,3 +218,79 @@
     padding: 9px;
   }
 }
+.section-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.add-hotel-button {
+  display: inline-flex;
+  padding: 11px 18px;
+  border-radius: 9px;
+  background: #245bc5;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.add-hotel-button:hover {
+  background: #19499f;
+}
+
+.hotel-form-page {
+  width: min(850px, calc(100% - 32px));
+  margin: 40px auto 70px;
+}
+
+.form-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.form-page-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: 30px;
+}
+
+.form-page-header p:last-child {
+  color: #758096;
+}
+
+.hotel-form-card {
+  padding: 30px;
+  background: white;
+  border: 1px solid #e8ebf1;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(25, 42, 75, 0.05);
+}
+
+.back-button {
+  padding: 11px 16px;
+  border: 1px solid #dce2ec;
+  border-radius: 9px;
+  color: #245bc5;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  background: #e7efff;
+}
+
+@media (max-width: 600px) {
+  .form-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hotel-form-card {
+    padding: 18px;
+  }
+}

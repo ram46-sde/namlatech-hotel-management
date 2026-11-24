@@ -23,3 +23,9 @@ export const deleteHotel = async (id) => {
   const response = await api.delete(`/hotels/${id}`);
   return response.data;
 };
+
+// Fetch one hotel by ID
+export const getHotelById = async (id) => {
+  const response = await api.get(`/hotels/${id}`);
+  return response.data;
+};
