@@ -39,16 +39,26 @@ function HotelCard({ hotel }) {
   return (
     <article className="hotel-card">
       <div className="hotel-image-wrapper">
-        <img
-          src={hotel.image}
-          alt={hotel.title}
-          className="hotel-image"
-          loading="lazy"
-        />
+        <Link
+          to={`/hotels/${hotel.id}`}
+          className="hotel-details-link"
+          aria-label={`View details for ${hotel.title}`}
+        >
+          <img
+            src={hotel.image}
+            alt={hotel.title}
+            className="hotel-image"
+            loading="lazy"
+          />
+        </Link>
       </div>
 
       <div className="hotel-content">
-        <h3>{hotel.title}</h3>
+        <h3>
+          <Link to={`/hotels/${hotel.id}`} className="hotel-title-link">
+            {hotel.title}
+          </Link>
+        </h3>
 
         <p className="hotel-description">{hotel.description}</p>
 
@@ -60,6 +70,9 @@ function HotelCard({ hotel }) {
         </div>
 
         <div className="hotel-actions">
+          <Link to={`/hotels/${hotel.id}`} className="view-details-button">
+            View Details
+          </Link>
           <Link to={`/hotels/${hotel.id}/edit`} className="edit-hotel-button">
             Edit Hotel
           </Link>

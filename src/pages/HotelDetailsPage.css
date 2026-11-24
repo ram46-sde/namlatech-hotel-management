@@ -1,0 +1,159 @@
+.hotel-details-page {
+  width: min(1100px, calc(100% - 32px));
+  margin: 35px auto 70px;
+}
+
+.details-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.details-edit-button {
+  padding: 11px 18px;
+  border-radius: 9px;
+  background: #245bc5;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.details-edit-button:hover {
+  background: #19499f;
+}
+
+.hotel-details-card {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #e8ebf1;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(25, 42, 75, 0.05);
+}
+
+.details-image-wrapper {
+  width: 100%;
+  height: 380px;
+  background: #e8edf5;
+  overflow: hidden;
+}
+
+.details-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-content {
+  padding: 32px;
+}
+
+.details-content h1 {
+  margin: 8px 0 15px;
+  font-size: clamp(26px, 4vw, 36px);
+  color: #172033;
+}
+
+.details-price {
+  color: #245bc5;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.details-price span {
+  color: #8993a6;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.details-description {
+  margin-top: 30px;
+}
+
+.details-description h2,
+.coordinates-section h2,
+.details-map-section h2 {
+  font-size: 20px;
+  color: #172033;
+}
+
+.details-description p {
+  color: #758096;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.coordinates-section {
+  margin-top: 30px;
+}
+
+.coordinate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.coordinate-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 17px;
+  border: 1px solid #e8ebf1;
+  border-radius: 10px;
+}
+
+.coordinate-grid span {
+  color: #758096;
+  font-size: 13px;
+}
+
+.coordinate-grid strong {
+  color: #245bc5;
+  font-size: 16px;
+}
+
+.details-map-section {
+  margin-top: 35px;
+}
+
+.details-map-section > p {
+  color: #758096;
+  margin-bottom: 18px;
+}
+
+.details-message {
+  width: min(700px, calc(100% - 32px));
+  margin: 70px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 14px;
+}
+
+.details-message p {
+  color: #758096;
+}
+
+.details-message a {
+  color: #245bc5;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .details-navigation {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .details-content {
+    padding: 20px;
+  }
+
+  .details-image-wrapper {
+    height: 240px;
+  }
+
+  .coordinate-grid {
+    grid-template-columns: 1fr;
+  }
+}

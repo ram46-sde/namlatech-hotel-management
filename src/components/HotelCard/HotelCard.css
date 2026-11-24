@@ -113,3 +113,35 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+.hotel-details-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hotel-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hotel-title-link:hover {
+  color: #245bc5;
+}
+
+.view-details-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 15px;
+  border: 1px solid #15976a;
+  border-radius: 8px;
+  color: #15976a;
+  background: white;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.view-details-button:hover {
+  background: #15976a;
+  color: white;
+}
