@@ -1,12 +1,43 @@
-import { useEffect } from "react";
+import HotelCard from "./components/HotelCard/HotelCard";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHotels } from "./features/hotels/hotelsSlice";
 import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const hotelsPerPage = 6;
 
   const { items, status, error } = useSelector((state) => state.hotels);
+  const filteredHotels = items.filter((hotel) => {
+    const matchesSearch = hotel.title
+      .toLowerCase()
+      .includes(searchTerm.trim().toLowerCase());
+
+    const matchesMinPrice =
+      minPrice === "" || Number(hotel.price) >= Number(minPrice);
+
+    const matchesMaxPrice =
+      maxPrice === "" || Number(hotel.price) <= Number(maxPrice);
+
+    return matchesSearch && matchesMinPrice && matchesMaxPrice;
+  });
+  const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
+
+  const startIndex = (currentPage - 1) * hotelsPerPage;
+
+  const paginatedHotels = filteredHotels.slice(
+    startIndex,
+    startIndex + hotelsPerPage,
+  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, minPrice, maxPrice]);
 
   useEffect(() => {
     if (status === "idle") {
@@ -36,8 +67,42 @@ function App() {
           </div>
 
           {status === "succeeded" && (
-            <span className="count-badge">{items.length} Hotels</span>
+            <span className="count-badge">{filteredHotels.length} Hotels</span>
           )}
+        </div>
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search hotels by name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
+        <div className="price-filter-container">
+          <div>
+            <label htmlFor="minPrice">Minimum Price</label>
+            <input
+              id="minPrice"
+              type="number"
+              min="0"
+              placeholder="Min price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="maxPrice">Maximum Price</label>
+            <input
+              id="maxPrice"
+              type="number"
+              min="0"
+              placeholder="Max price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            />
+          </div>
         </div>
 
         {status === "loading" && <p className="message">Loading hotels...</p>}
@@ -52,32 +117,48 @@ function App() {
 
         {status === "succeeded" && items.length > 0 && (
           <div className="hotel-grid">
-            {items.map((hotel) => (
-              <article className="hotel-card" key={hotel.id}>
-                <div className="hotel-image-wrapper">
-                  <img
-                    src={hotel.image}
-                    alt={hotel.title}
-                    className="hotel-image"
-                    loading="lazy"
-                  />
-                </div>
-
-                <div className="hotel-content">
-                  <h3>{hotel.title}</h3>
-
-                  <p className="hotel-description">{hotel.description}</p>
-
-                  <div className="hotel-footer">
-                    <strong>
-                      ₹{Number(hotel.price).toLocaleString("en-IN")}
-                      <span> / night</span>
-                    </strong>
-                  </div>
-                </div>
-              </article>
+            {paginatedHotels.map((hotel) => (
+              <HotelCard key={hotel.id} hotel={hotel} />
             ))}
           </div>
+        )}
+
+        {totalPages > 1 && (
+          <nav className="pagination" aria-label="Hotel pages">
+            <button
+              type="button"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              Previous
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <button
+                  type="button"
+                  key={page}
+                  className={currentPage === page ? "active" : ""}
+                  aria-current={currentPage === page ? "page" : undefined}
+                  onClick={() => setCurrentPage(page)}
+                >
+                  {page}
+                </button>
+              ),
+            )}
+
+            <button
+              type="button"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </nav>
+        )}
+
+        {status === "succeeded" && filteredHotels.length === 0 && (
+          <p className="message">No matching hotels found.</p>
         )}
       </section>
     </main>

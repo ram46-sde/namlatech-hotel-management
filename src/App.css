@@ -73,67 +73,6 @@
   gap: 24px;
 }
 
-.hotel-card {
-  overflow: hidden;
-  background: white;
-  border: 1px solid #e8ebf1;
-  border-radius: 15px;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-}
-
-.hotel-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(25, 42, 75, 0.09);
-}
-
-.hotel-image-wrapper {
-  height: 215px;
-  overflow: hidden;
-  background: #e8edf5;
-}
-
-.hotel-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hotel-content {
-  padding: 19px;
-}
-
-.hotel-content h3 {
-  margin: 0 0 10px;
-  font-size: 19px;
-}
-
-.hotel-description {
-  min-height: 63px;
-  margin: 0;
-  color: #758096;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.hotel-footer {
-  margin-top: 18px;
-  padding-top: 15px;
-  border-top: 1px solid #edf0f5;
-}
-
-.hotel-footer strong {
-  color: #245bc5;
-  font-size: 20px;
-}
-
-.hotel-footer span {
-  color: #8993a6;
-  font-size: 13px;
-  font-weight: 400;
-}
-
 .message,
 .error-message {
   padding: 25px;
@@ -167,5 +106,115 @@
 
   .hotel-image-wrapper {
     height: 220px;
+  }
+}
+.search-container {
+  margin-bottom: 25px;
+}
+
+.search-container input {
+  width: 100%;
+  max-width: 450px;
+  padding: 14px 16px;
+  border: 1px solid #dce2ec;
+  border-radius: 10px;
+  outline: none;
+  background: white;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.search-container input:focus {
+  border-color: #245bc5;
+}
+
+.price-filter-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.price-filter-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.price-filter-container label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.price-filter-container input {
+  width: 180px;
+  padding: 12px;
+  border: 1px solid #dce2ec;
+  border-radius: 9px;
+  outline: none;
+  background: white;
+}
+
+.price-filter-container input:focus {
+  border-color: #245bc5;
+}
+
+@media (max-width: 600px) {
+  .price-filter-container {
+    flex-direction: column;
+  }
+
+  .price-filter-container input {
+    width: 100%;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 35px;
+}
+
+.pagination button {
+  min-width: 40px;
+  padding: 10px 14px;
+  border: 1px solid #dce2ec;
+  border-radius: 8px;
+  background: white;
+  color: #245bc5;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pagination button.active {
+  background: #245bc5;
+  color: white;
+  border-color: #245bc5;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  background: #e7efff;
+}
+
+.pagination button.active:hover {
+  background: #245bc5;
+}
+
+@media (max-width: 400px) {
+  .pagination {
+    gap: 5px;
+  }
+
+  .pagination button {
+    padding: 9px;
   }
 }
