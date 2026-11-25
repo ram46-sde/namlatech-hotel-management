@@ -6,7 +6,7 @@ import "./Footer.css";
 // DEMO DATA: replace before production
 const DEMO_CONTACT = {
   email: "hello@maaligai.example.com",
-  phoneDisplay: "+91 00000 00000",
+  phoneDisplay: "+91 55555 66666",
   phoneHref: "+91 1234567890",
   location: "Pondicherry, India",
 };
@@ -184,4 +184,3 @@ function Footer() {
 }
 
 export default Footer;
-
