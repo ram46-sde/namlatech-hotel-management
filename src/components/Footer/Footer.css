@@ -103,6 +103,47 @@
   scroll-margin-top: 90px;
 }
 
+.site-footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer-contact-item {
+  color: var(--brand-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.site-footer-contact-link,
+.site-footer-contact-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  color: var(--brand-text-muted);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color var(--brand-transition);
+}
+
+.site-footer-contact-link:hover {
+  color: var(--brand-accent);
+}
+
+.site-footer-contact-link:focus-visible {
+  outline: 2px solid var(--brand-accent);
+  outline-offset: 3px;
+}
+
+.site-footer-contact-icon {
+  color: var(--brand-accent);
+  flex-shrink: 0;
+}
+
 .site-footer-bottom {
   padding-top: 22px;
   text-align: center;

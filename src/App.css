@@ -358,3 +358,58 @@
   flex: 1 0 auto;
   width: 100%;
 }
+
+/* Theme-aligned text styling for /hotels page header */
+.app-shell .page-header {
+  position: relative;
+  margin-bottom: 44px;
+  padding-bottom: 18px;
+}
+
+.app-shell .page-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--brand-primary) 0%,
+    var(--brand-accent-hover) 100%
+  );
+}
+
+.app-shell .page-header .eyebrow {
+  margin: 0 0 10px;
+  color: var(--brand-primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.app-shell .page-header h1 {
+  margin: 0;
+  color: var(--brand-secondary);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.app-shell .page-header .header-description {
+  margin: 10px 0 0;
+  max-width: 560px;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .app-shell .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 14px;
+  }
+}
