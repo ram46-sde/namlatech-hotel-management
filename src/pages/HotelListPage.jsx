@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHotels } from "../features/hotels/hotelsSlice";
 import HotelCard from "../components/HotelCard/HotelCard";
+import PageSEO from "../components/SEO/PageSEO";
 //import { Link } from "react-router";
 //import "../App.css";
 
@@ -54,11 +55,13 @@ function HotelListPage() {
 
   return (
     <main className="app-shell">
+      <PageSEO
+        title="Explore Hotels"
+        description="Explore and manage hotels with detailed descriptions, images, pricing and location information."
+      />
       <header className="page-header">
-        <div className="brand-mark">N</div>
-
         <div>
-          <p className="eyebrow">NAMLATECH · HOTEL MANAGEMENT</p>
+          <p className="eyebrow">WELCOME TO Maaligai</p>
           <h1>Discover Hotels</h1>
           <p className="header-description">
             Explore and manage your hotel collection.
@@ -66,7 +69,7 @@ function HotelListPage() {
         </div>
       </header>
 
-      <section className="list-section">
+      <section className="list-section" id="hotels">
         <div className="section-heading">
           <div>
             <h2>Hotel Listings</h2>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router";
-
+import PageSEO from "../components/SEO/PageSEO";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchHotelById } from "../features/hotels/hotelsSlice";
@@ -53,6 +53,7 @@ function HotelDetailsPage() {
 
   return (
     <main className="hotel-details-page">
+      <PageSEO title={hotel.title} description={hotel.description} />
       {/* Page navigation */}
       <div className="details-navigation">
         <Link to="/" className="back-button">

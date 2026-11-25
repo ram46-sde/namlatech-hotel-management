@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import HotelForm from "../components/HotelForm/HotelForm";
-
+import PageSEO from "../components/SEO/PageSEO";
 import {
   fetchHotelById,
   addHotel,
@@ -72,6 +72,15 @@ function HotelFormPage() {
 
   return (
     <main className="hotel-form-page">
+      <PageSEO
+        title={isEditing ? "Edit Hotel" : "Add New Hotel"}
+        description={
+          isEditing
+            ? "Update hotel information, pricing and location details."
+            : "Add a new hotel with its image, description, price and location."
+        }
+        noIndex
+      />
       <div className="form-page-header">
         <div>
           <p className="eyebrow">NAMLATECH · HOTEL MANAGEMENT</p>
