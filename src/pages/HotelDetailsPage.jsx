@@ -36,7 +36,7 @@ function HotelDetailsPage() {
       <main className="details-message">
         <h2>Hotel not found</h2>
         <p>{error || "Unable to load hotel details."}</p>
-        <Link to="/">Back to Hotels</Link>
+        <Link to="/hotels">Back to Hotels</Link>
       </main>
     );
   }
@@ -56,7 +56,7 @@ function HotelDetailsPage() {
       <PageSEO title={hotel.title} description={hotel.description} />
       {/* Page navigation */}
       <div className="details-navigation">
-        <Link to="/" className="back-button">
+        <Link to="/hotels" className="back-button">
           ← Back to Hotels
         </Link>
 

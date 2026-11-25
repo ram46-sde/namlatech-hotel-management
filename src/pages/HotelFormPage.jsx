@@ -44,7 +44,7 @@ function HotelFormPage() {
         toast.success("Hotel added successfully!");
       }
 
-      navigate("/");
+      navigate("/hotels");
     } catch (error) {
       toast.error(error || mutationError || "Unable to save hotel.");
     }
@@ -61,7 +61,7 @@ function HotelFormPage() {
       <main className="placeholder-page">
         <h2>Unable to load hotel</h2>
         <p>{mutationError || "Hotel not found or API error."}</p>
-        <Link to="/">Back to Hotel Listings</Link>
+        <Link to="/hotels">Back to Hotel Listings</Link>
       </main>
     );
   }
@@ -94,7 +94,7 @@ function HotelFormPage() {
           </p>
         </div>
 
-        <Link to="/" className="back-button">
+        <Link to="/hotels" className="back-button">
           Back to Hotels
         </Link>
       </div>

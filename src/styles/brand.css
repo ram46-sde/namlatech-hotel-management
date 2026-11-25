@@ -1,0 +1,24 @@
+/* Maaligai Brand Theme Variables
+   Extracted from the supplied Maaligai logo palette:
+   - Primary (Royal Navy): #112B59 / #0C1E42
+   - Secondary (Obsidian Charcoal): #101318 / #1D212A
+   - Accent (Warm Imperial Gold): #F0CB84 / #D4A857
+*/
+:root {
+  --brand-primary: #112b59;
+  --brand-primary-dark: #0c1e42;
+  --brand-primary-light: #1b3e7a;
+  --brand-secondary: #101318;
+  --brand-secondary-soft: #1d212a;
+  --brand-accent: #f0cb84;
+  --brand-accent-hover: #e2b563;
+  --brand-accent-soft: rgba(240, 203, 132, 0.14);
+  --brand-accent-border: rgba(240, 203, 132, 0.35);
+  --brand-text-light: #f8fafc;
+  --brand-text-muted: #cbd5e1;
+  --brand-surface-dark: #0b162c;
+  --brand-border-subtle: rgba(255, 255, 255, 0.12);
+  --brand-shadow-nav: 0 6px 24px rgba(10, 16, 30, 0.25);
+  --brand-transition: 0.2s ease;
+}
+

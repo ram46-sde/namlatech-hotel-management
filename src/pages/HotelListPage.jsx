@@ -1,22 +1,36 @@
-import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router";
+
 import { fetchHotels } from "../features/hotels/hotelsSlice";
 import HotelCard from "../components/HotelCard/HotelCard";
+import PriceFilter from "../components/PriceFilter/PriceFilter";
+import Pagination from "../components/Pagination/Pagination";
 import PageSEO from "../components/SEO/PageSEO";
-//import { Link } from "react-router";
-//import "../App.css";
 
 function HotelListPage() {
   const dispatch = useDispatch();
+
+  // Redux state
+  const { items, status, error } = useSelector((state) => state.hotels);
+
+  // Search, price and pagination states
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState("default");
 
   const hotelsPerPage = 6;
 
-  const { items, status, error } = useSelector((state) => state.hotels);
+  // Fetch hotels from API
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchHotels());
+    }
+  }, [dispatch, status]);
+
+  // Filter hotels
   const filteredHotels = items.filter((hotel) => {
     const matchesSearch = hotel.title
       .toLowerCase()
@@ -30,46 +44,72 @@ function HotelListPage() {
 
     return matchesSearch && matchesMinPrice && matchesMaxPrice;
   });
-  const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(Math.max(totalPages, 1));
+
+  // Sort hotels
+  const sortedHotels = [...filteredHotels].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low":
+        return Number(a.price) - Number(b.price);
+
+      case "price-high":
+        return Number(b.price) - Number(a.price);
+
+      case "name":
+        return a.title.localeCompare(b.title);
+
+      default:
+        return 0;
     }
-  }, [currentPage, totalPages]);
+  });
+
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedHotels.length / hotelsPerPage);
 
   const startIndex = (currentPage - 1) * hotelsPerPage;
 
-  const paginatedHotels = filteredHotels.slice(
+  const paginatedHotels = sortedHotels.slice(
     startIndex,
     startIndex + hotelsPerPage,
   );
+
+  // Reset pagination when filters or sorting change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, minPrice, maxPrice]);
+  }, [searchTerm, minPrice, maxPrice, sortBy]);
 
+  // Keep current page valid after hotel deletion or filtering
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchHotels());
+    const validPage = Math.max(totalPages, 1);
+
+    if (currentPage > validPage) {
+      setCurrentPage(validPage);
     }
-  }, [dispatch, status]);
+  }, [currentPage, totalPages]);
 
   return (
     <main className="app-shell">
+      {/* SEO */}
       <PageSEO
         title="Explore Hotels"
         description="Explore and manage hotels with detailed descriptions, images, pricing and location information."
       />
+
+      {/* Page Header */}
       <header className="page-header">
         <div>
           <p className="eyebrow">WELCOME TO Maaligai</p>
+
           <h1>Discover Hotels</h1>
+
           <p className="header-description">
             Explore and manage your hotel collection.
           </p>
         </div>
       </header>
 
+      {/* Hotel Listing Section */}
       <section className="list-section" id="hotels">
+        {/* Section Heading */}
         <div className="section-heading">
           <div>
             <h2>Hotel Listings</h2>
@@ -89,96 +129,93 @@ function HotelListPage() {
           </div>
         </div>
 
-        <div className="search-container">
-          <input
-            type="text"
-            placeholder="Search hotels by name..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        <div className="price-filter-container">
-          <div>
-            <label htmlFor="minPrice">Minimum Price</label>
-            <input
-              id="minPrice"
-              type="number"
-              min="0"
-              placeholder="Min price"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
+        {/* Two Column Layout */}
+        <div className="hotel-list-layout">
+          {/* LEFT SIDEBAR */}
+          <aside className="hotel-filter-sidebar">
+            {/* Price Slider and Manual Inputs */}
+            <PriceFilter
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              minBound={0}
+              maxBound={10000}
+              onMinChange={setMinPrice}
+              onMaxChange={setMaxPrice}
+              onReset={() => {
+                setMinPrice("");
+                setMaxPrice("");
+              }}
             />
-          </div>
 
-          <div>
-            <label htmlFor="maxPrice">Maximum Price</label>
-            <input
-              id="maxPrice"
-              type="number"
-              min="0"
-              placeholder="Max price"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-            />
-          </div>
-        </div>
+            {/* Sort By */}
+            <div className="sort-sidebar-card">
+              <h3>Sort By</h3>
 
-        {status === "loading" && <p className="message">Loading hotels...</p>}
+              <label htmlFor="sortBy">Sort hotels</label>
 
-        {status === "failed" && (
-          <p className="error-message">Failed to load hotels: {error}</p>
-        )}
+              <select
+                id="sortBy"
+                value={sortBy}
+                onChange={(event) => setSortBy(event.target.value)}
+              >
+                <option value="default">Recommended</option>
 
-        {status === "succeeded" && items.length === 0 && (
-          <p className="message">No hotels available.</p>
-        )}
+                <option value="price-low">Price: Low to High</option>
 
-        {status === "succeeded" && items.length > 0 && (
-          <div className="hotel-grid">
-            {paginatedHotels.map((hotel) => (
-              <HotelCard key={hotel.id} hotel={hotel} />
-            ))}
-          </div>
-        )}
+                <option value="price-high">Price: High to Low</option>
 
-        {totalPages > 1 && (
-          <nav className="pagination" aria-label="Hotel pages">
-            <button
-              type="button"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
-            >
-              Previous
-            </button>
+                <option value="name">Hotel Name</option>
+              </select>
+            </div>
+          </aside>
 
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-              (page) => (
-                <button
-                  type="button"
-                  key={page}
-                  className={currentPage === page ? "active" : ""}
-                  aria-current={currentPage === page ? "page" : undefined}
-                  onClick={() => setCurrentPage(page)}
-                >
-                  {page}
-                </button>
-              ),
+          {/* RIGHT SIDE HOTEL RESULTS */}
+          <div className="hotel-results">
+            {/* Search */}
+            <div className="results-toolbar">
+              <div className="search-container">
+                <input
+                  type="text"
+                  placeholder="Search hotels by name..."
+                  aria-label="Search hotels by name"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Loading */}
+            {status === "loading" && (
+              <p className="message">Loading hotels...</p>
             )}
 
-            <button
-              type="button"
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-            >
-              Next
-            </button>
-          </nav>
-        )}
+            {/* Error */}
+            {status === "failed" && (
+              <p className="error-message">Failed to load hotels: {error}</p>
+            )}
 
-        {status === "succeeded" && filteredHotels.length === 0 && (
-          <p className="message">No matching hotels found.</p>
-        )}
+            {/* Empty Results */}
+            {status === "succeeded" && filteredHotels.length === 0 && (
+              <p className="message">No matching hotels found.</p>
+            )}
+
+            {/* Hotel Cards */}
+            {status === "succeeded" && paginatedHotels.length > 0 && (
+              <div className="hotel-grid">
+                {paginatedHotels.map((hotel) => (
+                  <HotelCard key={hotel.id} hotel={hotel} />
+                ))}
+              </div>
+            )}
+
+            {/* Reusable Pagination */}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        </div>
       </section>
     </main>
   );
